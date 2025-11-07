@@ -81,6 +81,34 @@ body {
   margin-bottom: 20px;
 }
 
+/* chat message bubbles */
+.chat-message {
+  margin-bottom: 12px;
+  display: flex;
+}
+
+.chat-message.user {
+  justify-content: flex-end;
+}
+
+.chat-message.assistant {
+  justify-content: flex-start;
+}
+
+.chat-message .message-content {
+  max-width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  font-size: 15px;
+}
+
+.chat-message.user .message-content {
+  background: #000;
+  color: #fff;
+}
+
 /* placeholder message */
 .placeholder-message {
   width: 100%;
@@ -181,11 +209,17 @@ body {
 .product-card {
   flex: 0 1 calc(33.333% - 14px);
   border: 1px solid #ccc;
-  padding: 15px;
+  padding: 12px;
   border-radius: 4px;
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-top {
+  display: flex;
   gap: 15px;
-  min-height: 160px;
+  align-items: center;
 }
 
 .product-card img {
@@ -200,7 +234,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 110px;
+  min-height: 60px;
 }
 
 .product-card h3 {
@@ -211,6 +245,90 @@ body {
 .product-card p {
   font-size: 14px;
   color: #666;
+}
+
+/* visual indicator for selected product cards */
+.product-card.selected {
+  border-color: #0b76ff;
+  background: #f0f8ff;
+  box-shadow: 0 6px 18px rgba(11, 118, 255, 0.06);
+  transform: translateY(-2px);
+}
+
+/* selected products chips in the right-hand area */
+.selected-chip {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.selected-chip img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.selected-chip .chip-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+
+.selected-chip .chip-brand {
+  color: #666;
+}
+
+.remove-btn {
+  margin-left: 8px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  color: #999;
+}
+
+.remove-btn:hover {
+  color: #e53935;
+}
+
+/* details button inside product card */
+.details-btn {
+  margin-top: 10px;
+  padding: 6px 10px;
+  font-size: 13px;
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.details-btn:focus {
+  outline: 2px solid #0b76ff;
+  outline-offset: 2px;
+}
+
+.product-description {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #444;
+  line-height: 1.3;
+  max-height: 240px;
+  overflow: auto;
+  background: #fff;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+
+/* make the description span the full width under the image and centered */
+.product-card .product-description {
+  width: 100%;
 }
 
 /* selected products */
@@ -252,4 +370,35 @@ body {
 
 .generate-btn i {
   margin-right: 8px;
+}
+
+/* small clear-all button next to generate */
+.selected-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px; /* space between selected products list and action buttons */
+  align-items: center;
+}
+
+.clear-btn {
+  background: transparent;
+  border: 1px solid #ccc;
+  padding: 16px 12px; /* match generate button vertical padding */
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clear-btn:hover {
+  background: #fff8f8;
+  border-color: #e53935;
+}
+
+/* Ensure the generate button shares the row and matches heights with the clear button */
+.selected-actions .generate-btn {
+  margin-top: 0; /* remove the default top margin so buttons align */
+  flex: 1 1 auto; /* allow generate to grow */
 }
