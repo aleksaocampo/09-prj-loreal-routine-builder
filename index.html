@@ -37,6 +37,12 @@
           <option value="suncare">Suncare</option>
           <option value="fragrance">Fragrance</option>
         </select>
+        <input
+          id="productSearch"
+          type="search"
+          placeholder="Search products by name or keyword"
+          aria-label="Search products"
+        />
       </div>
 
       <!-- Products Grid -->
@@ -57,6 +63,12 @@
       <!------- Chat Area ------->
       <section class="chatbox">
         <h2>Let's Build Your Routine</h2>
+        <div class="chat-options">
+          <label class="web-search-toggle"
+            ><input id="webSearchToggle" type="checkbox" /> Include web
+            results</label
+          >
+        </div>
         <div id="chatWindow" class="chat-window"></div>
 
         <form id="chatForm" class="chat-form">

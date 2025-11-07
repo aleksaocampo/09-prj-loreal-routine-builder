@@ -43,14 +43,39 @@ body {
 }
 
 .search-section select {
-  width: 100%;
-  padding: 16px;
-  font-size: 18px;
+  flex: 0 0 48%;
+  padding: 12px 14px;
+  font-size: 16px;
   border: 2px solid #000;
   border-radius: 8px;
   cursor: pointer;
   background-color: white;
   font-weight: 500;
+}
+
+.search-section input[type="search"] {
+  flex: 1 1 48%;
+  padding: 12px 14px;
+  margin-left: 12px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+}
+
+.chat-options {
+  margin-top: 10px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.web-search-toggle {
+  font-size: 14px;
+  color: #333;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .search-section select:focus {

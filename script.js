@@ -46,6 +46,15 @@ function escapeHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
+/* Debounce helper for the search input */
+function debounce(fn, wait = 250) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), wait);
+  };
+}
+
 function appendMessageToChat(role, text) {
   // Normalize and trim incoming text to avoid trailing newlines or spaces
   const safeText = String(text == null ? "" : text).trim();
@@ -98,13 +107,20 @@ async function sendMessagesToAI(messagesArray) {
   // so the client does not need to hold the OpenAI API key.
   const WORKER_URL = "https://loreal-chatbot.aocampo2533.workers.dev/";
 
+  // allow caller to pass options via a global object; default false
+  const useWeb = window.__useWebSearch === true;
+
   const resp = await fetch(WORKER_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     // Include the promptId so the worker can apply the saved system prompt/constraints there
-    body: JSON.stringify({ messages: messagesArray, promptId: PROMPT_ID }),
+    body: JSON.stringify({
+      messages: messagesArray,
+      promptId: PROMPT_ID,
+      useWeb,
+    }),
   });
 
   if (!resp.ok) {
@@ -132,6 +148,62 @@ async function sendMessagesToAI(messagesArray) {
 
   // Trim whitespace/newlines from the assistant text to avoid trailing LFs
   return String(aiText).trim();
+}
+
+/* Product search & combined filter handling */
+const productSearchInput = document.getElementById("productSearch");
+let currentSearchTerm = "";
+
+async function applyFilters() {
+  const products = await loadProducts();
+  const selectedCategory = categoryFilter.value;
+  const search = String(currentSearchTerm || "")
+    .trim()
+    .toLowerCase();
+
+  // If nothing selected and no search term, show placeholder
+  if (!selectedCategory && !search) {
+    productsContainer.innerHTML = `
+      <div class="placeholder-message">
+        Select a category to view products
+      </div>
+    `;
+    return;
+  }
+
+  const filtered = products.filter((p) => {
+    const matchCategory = !selectedCategory || p.category === selectedCategory;
+    const hay =
+      `${p.name} ${p.brand} ${p.description} ${p.category}`.toLowerCase();
+    const matchSearch = !search || hay.includes(search);
+    return matchCategory && matchSearch;
+  });
+
+  displayProducts(filtered);
+}
+
+const debouncedApply = debounce(() => applyFilters(), 250);
+
+if (productSearchInput) {
+  productSearchInput.addEventListener("input", (e) => {
+    currentSearchTerm = e.target.value;
+    debouncedApply();
+  });
+}
+
+// Wire category changes into the new filter function
+categoryFilter.addEventListener("change", async (e) => {
+  currentSearchTerm = productSearchInput ? productSearchInput.value : "";
+  applyFilters();
+});
+
+/* Web search toggle wiring */
+const webSearchToggle = document.getElementById("webSearchToggle");
+if (webSearchToggle) {
+  webSearchToggle.addEventListener("change", (e) => {
+    // store global flag; sendMessagesToAI will read window.__useWebSearch
+    window.__useWebSearch = e.target.checked === true;
+  });
 }
 
 /* Create HTML for displaying product cards */
