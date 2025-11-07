@@ -274,9 +274,10 @@ body {
 
 /* visual indicator for selected product cards */
 .product-card.selected {
-  border-color: #0b76ff;
-  background: #f0f8ff;
-  box-shadow: 0 6px 18px rgba(11, 118, 255, 0.06);
+  /* lighter, warmer highlight derived from #e3a535 */
+  border-color: #f0d59a;
+  background: #fff9ef;
+  box-shadow: 0 6px 18px rgba(227, 165, 53, 0.06);
   transform: translateY(-2px);
 }
 
@@ -334,7 +335,7 @@ body {
 }
 
 .details-btn:focus {
-  outline: 2px solid #0b76ff;
+  outline: 2px solid #e3a535;
   outline-offset: 2px;
 }
 
