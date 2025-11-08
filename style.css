@@ -13,9 +13,19 @@ body {
   justify-content: center;
 }
 
+/* light warm background derived from #e3a535 while keeping the content panel white for contrast */
+body {
+  background-color: #fffcf9; /* very pale warm tint */
+}
+
 .page-wrapper {
   width: 90%;
   max-width: 900px;
+  /* content area uses a warm tint derived from #e3a535 */
+  background: #fffcf9; /* subtle warm content background */
+  border-radius: 6px;
+  padding: 20px 24px;
+  /* box-shadow: 0 6px 20px rgba(0,0,0,0.04); */
 }
 
 /* header */
@@ -102,7 +112,7 @@ body {
   line-height: 1.5;
   height: 250px;
   overflow-y: auto;
-  background: #fafafa;
+  background: #ffffff; /* keep chat area white for contrast */
   margin-bottom: 20px;
 }
 
@@ -239,6 +249,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  background: #ffffff; /* keep product cards white */
 }
 
 .card-top {
